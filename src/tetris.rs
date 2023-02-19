@@ -1,12 +1,4 @@
-use std::collections::HashSet;
-
-#[derive(Debug, Hash, PartialEq, Eq, Clone, Copy)]
-pub struct Pos(pub i32, pub i32);
-
-#[derive(Debug, Clone)]
-pub struct Shape {
-    positions: HashSet<i32, i32>
-}
+use crate::shape::Shape;
 
 pub struct Tetris {
     width: usize,
