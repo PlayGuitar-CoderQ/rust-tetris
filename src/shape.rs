@@ -5,30 +5,31 @@ pub struct Pos(pub i32, pub i32);
 
 #[derive(Debug, Clone)]
 pub struct Shape {
-    positions: HashSet<i32, i32>,
+    positions: HashSet<Pos>,
     anchor: Pos,
 }
 
 macro_rules! impl_shape_constructor {
-    ($new:ident: [ $( $pos:expr ),* ] anchored at $anchor:expr) => {
-        pub fn new_i() -> Self {
-            Self {
-                positions: [Pos(0, 0), Pos(1, 0), Pos(2, 0), Pos(3, 0)]
-                    .into_iter()
-                    .collect(),
-                anchor: Pos(1, 0),
+    ($( $new:ident: [ $( $pos:expr ),* ] anchored at $anchor:expr )*) => {
+        ${
+            pub fn $new() -> Self {
+                Self {
+                    postions: [$( $pos ),*].into_iter().collect(),
+                    anchor: $anchor,
+                }
             }
         }
-    };
+    }
 }
 
 impl Shape {
-    pub fn new_i() -> Self {
-        Self {
-            positions: [Pos(0, 0), Pos(1, 0), Pos(2, 0), Pos(3, 0)]
-                .into_iter()
-                .collect(),
-            anchor: Pos(1, 0),
-        }
+    impl_shape_constructor! {
+        new_i: [Pos(0, 0), Pos(1, 0), Pos(2, 0), Pos(3, 0)] anchored at Pos(1, 0);
+        new_o: [Pos(0, 0), Pos(1, 0), Pos(0, 1), Pos(1, 1)] anchored at Pos(0, 0);
+        new_t: [Pos(0, 0), Pos(1, 0), Pos(2, 0), Pos(1, 1)] anchored at Pos(0, 0);
+        new_j: [Pos(0, 0), Pos(0, 1), Pos(0, 2), Pos(-1, 2)] anchored at Pos(0, 1);
+        new_l: [Pos(0, 0), Pos(0, 1), Pos(0, 2), Pos(1, 2)] anchored at Pos(0, 1);
+        new_s: [Pos(0, 0), Pos(1, 0), Pos(0, 1), Pos(-1, 1)] anchored at Pos(0, 0);
+        new_z: [Pos(0, 0), Pos(-1, 0), Pos(0, 1), Pos(1, 1)] anchored at Pos(0, 0);
     }
 }
